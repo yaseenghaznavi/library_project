@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-
-    <x-app-layout>
-
-    </x-app-layout>
-
-    Admin Page
-
-</body>
-
+<html>
+  <head>
+    @include('admin.css')
+  </head>
+  <body>
+    <header class="header">   
+      @include('admin.header')
+    </header>
+    <div class="d-flex align-items-stretch">
+      <!-- Sidebar Navigation-->
+      @include('admin.sidebar')
+      <!-- Sidebar Navigation end-->
+      @include('admin.body')
+    
+      @include('admin.footer')
+  </body>
 </html>
