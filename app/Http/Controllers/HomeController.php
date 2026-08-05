@@ -45,4 +45,21 @@ class HomeController extends Controller
             return redirect()->back()->with('message', "Book Currenty Unavailable.");
         }
     }
+
+    public function book_history(){
+        if(Auth::id()){
+            
+            $user_id = Auth::user()->id;
+            $book_requests = Borrow::with('book')->where('user_id', '=', $user_id)->get();
+            return view('home.book_history', compact('book_requests'));
+        
+        }
+
+    }
+
+    public function cancel_request($id){
+        $request = Borrow::find($id);
+        $request->delete();
+        return redirect()->back()->with('message', 'Book Borrow Request Cancelled.');
+    }
 }
