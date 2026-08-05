@@ -31,3 +31,10 @@ Route::get('/book_delete/{id}', [AdminController::class, 'book_delete']);
 
 Route::get('/edit_book/{id}', [AdminController::class, 'edit_book']);
 Route::post('/update_book/{id}', [AdminController::class, 'update_book']);
+
+Route::get('/borrow_books/{id}', [HomeController::class, 'borrow_books']);
+
+Route::get('/borrow_request', [AdminController::class, 'borrow_request']);
+Route::get('/approve_book/{id}', [AdminController::class, 'approve_book']);
+Route::get('/return_book/{id}', [AdminController::class, 'return_book']);
+Route::get('/rejected_book/{id}', [AdminController::class, 'rejected_book']);

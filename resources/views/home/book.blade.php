@@ -17,6 +17,10 @@
                     </ul>
                 </div>
             </div>
+
+            
+
+
             <div class="col-lg-12">
                 <div class="row grid">
 
@@ -42,6 +46,11 @@
                                 
                                 <div class="text-button">
                                     <a href="details.html">View Item Details</a>
+                                </div>
+
+                                <br>
+                                <div class="">
+                                    <a class='btn btn-primary' href="{{url('borrow_books', $book->id)}}">Apply to Borrow</a>
                                 </div>
                             </div>
                         </div>

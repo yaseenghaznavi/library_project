@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Borrow;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -12,5 +15,34 @@ class HomeController extends Controller
     {
         $books = Book::all();
         return view('home.index', compact('books'));
+    }
+
+    public function borrow_books($id){
+        $book = Book::find($id);
+        $quantity = $book->quantity;
+        $book_id = $id;
+
+        if($quantity >= '1'){
+            if(Auth::id()){
+                $user_id = Auth::user()->id;
+                $borrow = new Borrow();
+
+                $borrow->book_id = $book_id;
+                $borrow->user_id = $user_id;
+                $borrow->status = 'Applied';
+
+                $borrow->save();
+
+                return redirect()->back()->with('message', "A request is sent to admin to borrow this book.");
+
+            }
+            else{
+                return redirect('/login');
+            }
+        }
+
+        else{
+            return redirect()->back()->with('message', "Book Currenty Unavailable.");
+        }
     }
 }

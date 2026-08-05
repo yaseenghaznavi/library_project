@@ -2,6 +2,14 @@
 <div class="main-banner">
     <div class="container">
         <div class="row">
+            <div>
+                @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{session()->get('message')}}
+                    <button class="close" type="button" data-bs-dismiss="alert" area-hidden="true">X</button>
+                </div>
+                @endif
+            </div>
             <div class="col-lg-6 align-self-center">
                 <div class="header-text">
                     <h6>Book is Knowledge</h6>
