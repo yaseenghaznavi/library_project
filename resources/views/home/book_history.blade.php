@@ -61,6 +61,7 @@
                         <th>Book Status</th>
                         <th>Book Image</th>
                         <th>Cancel Request</th>
+                        <th>Due Date for Return</th>
                     </tr>
 
                     @foreach ($book_requests as $request)
@@ -77,6 +78,15 @@
                                     <a class="btn btn-warning" href="{{url('cancel_request', $request->id)}}">Cancel</a>
                                 @else
                                     <p style="color: white; font-weight: bold;">Not Allowed</p>
+                                @endif
+                            </td>
+                            <td>
+                                @if($request->status == "Approved")
+                                    
+                                
+                                    {{-- <a class="btn btn-warning" href="{{url('cancel_request', $request->id)}}">Cancel</a> --}}
+                                @else
+                                    <p style="color: white; font-weight: bold;">No Due Date</p>
                                 @endif
                             </td>
                         </tr>

@@ -14,7 +14,7 @@ class HomeController extends Controller
     //
     public function index()
     {
-        $books = Book::all();
+        $books = Book::paginate(4);
         return view('home.index', compact('books'));
     }
 
@@ -65,7 +65,7 @@ class HomeController extends Controller
     }
 
     public function explore(){
-        $books = Book::all();
+        $books = Book::paginate(6);
         $categories = Category::all();
         return view('home.explore', compact('books', 'categories'));
     }

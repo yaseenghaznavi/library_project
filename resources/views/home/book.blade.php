@@ -18,9 +18,6 @@
                 </div>
             </div>
 
-            
-
-
             <div class="col-lg-12">
                 <div class="row grid">
 
@@ -59,11 +56,13 @@
                     @endforeach
 
 
-                    
-
-
                 </div>
             </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                {{$books->links()}}
+            </div>
+
         </div>
     </div>
 </div>

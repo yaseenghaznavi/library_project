@@ -86,9 +86,15 @@
                         </div>
                      
                      @endforeach
+                     
 
                   </div>
                </div>
+
+               <div class="d-flex justify-content-center mt-4">
+                  {{$books->links()}}
+               </div>
+
             </div>
          </div>
       </div>

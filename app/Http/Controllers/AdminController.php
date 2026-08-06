@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Book;
 use App\Models\Borrow;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -40,7 +41,7 @@ class AdminController extends Controller
                 return view('admin.index', compact('total_books', 'total_users', 'books_borrowed', 'books_returned'));
             } 
             else if ($usertype == 'user') {
-                $books = Book::all();
+                $books = Book::paginate(4);
                 return view('home.index', compact('books'));
             } 
             else {
@@ -179,6 +180,10 @@ class AdminController extends Controller
         }    
         else{
             $book_request->status = 'Approved';
+
+            $book_request->borrow_date = Carbon::now()->format('Y-m-d');
+
+            $book_request->due_date = Carbon::now()->addDays(15)->format('Y-m-d');
             
             $book_request->save();
             
