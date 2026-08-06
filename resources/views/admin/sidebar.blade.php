@@ -9,7 +9,7 @@
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
         <ul class="list-unstyled">
-                <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
+                <li class="active"><a href="{{url('home')}}"> <i class="icon-home"></i>Home </a></li>
                 <li><a href="{{url ('category_page')}}"> <i class="icon-grid"></i>Category </a></li>
                 
                 <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
@@ -21,10 +21,6 @@
                   </ul>
                 </li>
                 <li><a href="{{url('borrow_request')}}"> <i class="icon-logout"></i>Borrow Request </a></li>
-        </ul><span class="heading">Extras</span>
-        <ul class="list-unstyled">
-          <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
-        </ul>
+        
+        
       </nav>

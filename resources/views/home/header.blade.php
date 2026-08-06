@@ -18,16 +18,15 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
+                    <a href="{{url('/')}}" class="logo">
                         <img src="assets/images/logo.png" alt="">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="index.html" class="active">Home</a></li>
-                        <li><a href="explore.html">Explore</a></li>
-                        <li><a href="details.html">Item Details</a></li>
-                        <li><a href="create.html">Create Yours</a></li>
+                        <li><a href="{{url('/')}}" class="active">Home</a></li>
+                        <li><a href="{{url('explore')}}">Explore</a></li>
+                        
 
                         @if (Route::has('login'))
 

@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Borrow;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -61,5 +62,28 @@ class HomeController extends Controller
         $request = Borrow::find($id);
         $request->delete();
         return redirect()->back()->with('message', 'Book Borrow Request Cancelled.');
+    }
+
+    public function explore(){
+        $books = Book::all();
+        $categories = Category::all();
+        return view('home.explore', compact('books', 'categories'));
+    }
+
+    public function search(Request $request){
+        $search = $request->search;
+
+        $categories = Category::all();
+
+        $books = Book::where('title', 'LIKE', '%'.$search.'%')->orWhere('author_name', 'LIKE', '%'.$search.'%')->get();
+
+        return view('home.explore', compact('books', 'categories'));
+    }
+
+    public function cat_search($id){
+        
+        $books = Book::where('category_id', $id)->get();
+        $categories = Category::all();
+        return view('home.explore', compact('books', 'categories'));
     }
 }

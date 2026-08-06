@@ -18,11 +18,32 @@ class AdminController extends Controller
             $usertype = Auth::user()->usertype;
 
             if ($usertype == 'admin') {
-                return view('admin.index');
-            } else if ($usertype == 'user') {
+                $total_users = User::count();
+                $total_books = Book::count();
+
+                $books_borrowed = Borrow::where('status', 'Approved')->count();
+                $books_returned = Borrow::where('status', 'Returned')->count();
+
+                // $books_borrowed = '0';
+                // $books_returned = '0';
+
+                // foreach ($book_requests as $request){
+                //     if($request->status == "Approved"){
+                //         $books_borrowed = $books_borrowed + '1';
+                //     }
+                //     if($request->status == "Returned"){
+                //         $books_returned = $books_returned + '1';
+                //     }
+                // }
+
+             
+                return view('admin.index', compact('total_books', 'total_users', 'books_borrowed', 'books_returned'));
+            } 
+            else if ($usertype == 'user') {
                 $books = Book::all();
                 return view('home.index', compact('books'));
-            } else {
+            } 
+            else {
                 return redirect()->back();
             }
         }

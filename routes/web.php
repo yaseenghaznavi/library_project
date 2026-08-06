@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\Admin;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -17,28 +18,32 @@ Route::middleware([
 });
 
 Route::get('/home', [AdminController::class, 'index']);
-Route::get('/category_page', [AdminController::class, 'category_page']);
-Route::post('/add_category', [AdminController::class, 'add_category']);
-Route::get('/category_delete/{id}', [AdminController::class, 'category_delete']);
-Route::get('/edit_category/{id}', [AdminController::class, 'edit_category']);
-Route::post('/update_category/{id}', [AdminController::class, 'update_category']);
+Route::get('/category_page', [AdminController::class, 'category_page'])->middleware(['auth', Admin::class]);
+Route::post('/add_category', [AdminController::class, 'add_category'])->middleware(['auth', Admin::class]);
+Route::get('/category_delete/{id}', [AdminController::class, 'category_delete'])->middleware(['auth', Admin::class]);
+Route::get('/edit_category/{id}', [AdminController::class, 'edit_category'])->middleware(['auth', Admin::class]);
+Route::post('/update_category/{id}', [AdminController::class, 'update_category'])->middleware(['auth', Admin::class]);
 
-Route::get('/add_book', [AdminController::class, 'add_book']);
-Route::post('/store_book', [AdminController::class, 'store_book']);
+Route::get('/add_book', [AdminController::class, 'add_book'])->middleware(['auth', Admin::class]);
+Route::post('/store_book', [AdminController::class, 'store_book'])->middleware(['auth', Admin::class]);
 
-Route::get('/show_book', [AdminController::class, 'show_book']);
-Route::get('/book_delete/{id}', [AdminController::class, 'book_delete']);
+Route::get('/show_book', [AdminController::class, 'show_book'])->middleware(['auth', Admin::class]);
+Route::get('/book_delete/{id}', [AdminController::class, 'book_delete'])->middleware(['auth', Admin::class]);
 
-Route::get('/edit_book/{id}', [AdminController::class, 'edit_book']);
-Route::post('/update_book/{id}', [AdminController::class, 'update_book']);
+Route::get('/edit_book/{id}', [AdminController::class, 'edit_book'])->middleware(['auth', Admin::class]);
+Route::post('/update_book/{id}', [AdminController::class, 'update_book'])->middleware(['auth', Admin::class]);
 
 Route::get('/borrow_books/{id}', [HomeController::class, 'borrow_books']);
 
-Route::get('/borrow_request', [AdminController::class, 'borrow_request']);
-Route::get('/approve_book/{id}', [AdminController::class, 'approve_book']);
-Route::get('/return_book/{id}', [AdminController::class, 'return_book']);
-Route::get('/rejected_book/{id}', [AdminController::class, 'rejected_book']);
+Route::get('/borrow_request', [AdminController::class, 'borrow_request'])->middleware(['auth', Admin::class]);
+Route::get('/approve_book/{id}', [AdminController::class, 'approve_book'])->middleware(['auth', Admin::class]);
+Route::get('/return_book/{id}', [AdminController::class, 'return_book'])->middleware(['auth', Admin::class]);
+Route::get('/rejected_book/{id}', [AdminController::class, 'rejected_book'])->middleware(['auth', Admin::class]);
 
 Route::get('/book_history', [HomeController::class, 'book_history']);
 Route::get('/cancel_request/{id}', [HomeController::class, 'cancel_request']);
 
+Route::get('/explore', [HomeController::class, 'explore']);
+
+Route::get('/search', [HomeController::class, 'search']);
+Route::get('/cat_search/{id}', [HomeController::class, 'cat_search']);
