@@ -7,7 +7,7 @@
         .center{
             text-align: center;
             margin: auto;
-            width: 80%;
+            width: 90%;
             border: 1px solid white;
             margin-top: 60px;
         }
@@ -19,6 +19,15 @@
             font-size: 15px;
             font-weight: bold;
             padding: 10px;
+        }
+
+        td{
+            border: 1px solid white;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 4px;
         }
 
     </style>
@@ -47,6 +56,10 @@
                         <th>Borrow Status</th>
                         <th>Book Image</th>
                         <th>Change Status</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Fine</th>
                     </tr>
                     @foreach ($book_requests as $request)
                     <tr>
@@ -82,6 +95,31 @@
                                 <a class="btn btn-info" href="{{url('approve_book', $request->id)}}">Approved</a>
                                 <a class="btn btn-danger" href="{{url('rejected_book', $request->id)}}">Rejected</a>
                                 <a class="btn btn-warning" href="{{url('return_book', $request->id)}}">Returned</a>
+                            </td>
+                            <td>
+                                {{-- {{$request->borrow_date}} --}}
+                                @if ($request->borrow_date != null)
+                                    {{$request->borrow_date}}
+                                @else
+                                    <p>-</p>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($request->due_date != null)
+                                    {{$request->due_date}}
+                                @else
+                                    <p>-</p>
+                                @endif    
+                            </td>
+                            <td>
+                                @if ($request->return_date != null)
+                                    {{$request->return_date}}
+                                @else
+                                    <p>-</p>
+                                @endif    
+                            </td>
+                            <td>
+                                {{$request->fine}}
                             </td>
                         </tr>
                     @endforeach

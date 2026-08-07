@@ -61,7 +61,11 @@
                         <th>Book Status</th>
                         <th>Book Image</th>
                         <th>Cancel Request</th>
-                        <th>Due Date for Return</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Fine ($0.15 per day)</th>
+                        <th>Payment</th>
                     </tr>
 
                     @foreach ($book_requests as $request)
@@ -81,12 +85,41 @@
                                 @endif
                             </td>
                             <td>
-                                @if($request->status == "Approved")
-                                    
-                                
+                                @if($request->borrow_date != null)
+                                    {{$request->borrow_date}}
                                     {{-- <a class="btn btn-warning" href="{{url('cancel_request', $request->id)}}">Cancel</a> --}}
                                 @else
-                                    <p style="color: white; font-weight: bold;">No Due Date</p>
+                                    <p>-</p>
+                                @endif
+                            </td>
+                            <td>
+                                @if($request->due_date != null)
+                                    {{$request->due_date}}
+                                    {{-- <a class="btn btn-warning" href="{{url('cancel_request', $request->id)}}">Cancel</a> --}}
+                                @else
+                                    <p>-</p>
+                                @endif
+                            </td>
+                            <td>
+                                @if($request->return_date != null)
+                                    {{$request->return_date}}
+                                    {{-- <a class="btn btn-warning" href="{{url('cancel_request', $request->id)}}">Cancel</a> --}}
+                                @else
+                                    <p>-</p>
+                                @endif
+                            </td>
+                            
+                            <td>{{$request->fine}}</td>
+                            
+                            <td>
+                                @if($request->fine > '0' && $request->payment_status == 'unpaid')
+                                
+                                    {{-- <a class="btn btn-warning" href="{{url('cancel_request', $request->id)}}">Cancel</a> --}}
+                                    <a class="btn btn-primary" href="{{url('/payment', $request->id)}}">Pay Now</a>
+                                @elseif ($request->fine == '0' && $request->payment_status == 'paid')
+                                    <p class="text-success">Paid</p>
+                                @else
+                                    <p class="text-white">Not Required</p>
                                 @endif
                             </td>
                         </tr>

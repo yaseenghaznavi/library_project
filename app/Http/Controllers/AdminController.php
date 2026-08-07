@@ -208,6 +208,18 @@ class AdminController extends Controller
         }    
         else{
             $book_request->status = 'Returned';
+            $book_request->return_date = Carbon::now()->format('Y-m-d');
+
+            $return_date = Carbon::parse($book_request->return_date);
+            $due_date = Carbon::parse($book_request->due_date);
+
+            if($return_date->gt($due_date)){
+                $diff = abs($return_date->diffInDays($due_date));
+                $book_request->fine = $diff * '0.15';
+            }
+            else{
+                $book_request->fine = '0';
+            }
             
             $book_request->save();
             

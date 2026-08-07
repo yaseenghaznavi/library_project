@@ -86,4 +86,26 @@ class HomeController extends Controller
         $categories = Category::all();
         return view('home.explore', compact('books', 'categories'));
     }
+
+    public function payment($id){
+        $borrow_request = Borrow::find($id);
+        return view('home.payment', compact('borrow_request'));
+    }
+
+    public function process_payment(Request $request){
+        $borrow_request = Borrow::find($request->borrow_id);
+        $borrow_request->payment_status = 'paid';
+        $borrow_request->transaction_id = uniqid();
+        $borrow_request->fine = '0';
+        $borrow_request->save();
+        return redirect('/book_history');
+    }
+
+    public function payment_jazzcash(){
+        
+    }
+    
+    public function payment_easypaisa(){
+
+    }
 }
