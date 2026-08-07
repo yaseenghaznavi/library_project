@@ -42,9 +42,9 @@
                         <input type="hidden" name="borrow_id" value="{{ $borrow_request->id }}">
 
                         <button type="submit" class="btn btn-success">
-                            Pay with JazzCash
+                            Pay with Stripe
                         </button>
-                    </form>
+                    {{-- </form>
                     <br>
                     <form action="{{ url('/process_payment/Easypaisa') }}" method="post">
                         @csrf
@@ -54,7 +54,7 @@
                         <button type="submit" class="btn btn-success">
                             Pay with Easypaisa
                         </button>
-                    </form>
+                    </form> --}}
 
                 </div>
 

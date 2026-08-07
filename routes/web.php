@@ -50,5 +50,5 @@ Route::get('/cat_search/{id}', [HomeController::class, 'cat_search']);
 
 Route::get('/payment/{id}', [HomeController::class, 'payment']);
 
-Route::post('/process_payment/JazzCash', [HomeController::class, 'payment_jazzcash']);
-Route::post('/process_payment/JazzCash', [HomeController::class, 'payment_easypaisa']);
+// Route::post('/process_payment/JazzCash', [HomeController::class, 'payment_jazzcash']);
+// Route::post('/process_payment/JazzCash', [HomeController::class, 'payment_easypaisa']);
