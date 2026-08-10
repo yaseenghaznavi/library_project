@@ -36,10 +36,11 @@
                     <br>
                     <br>
 
-                    <form action="{{ url('/process_payment/JazzCash') }}" method="post">
+                    <form action="{{ route('stripe.checkout') }}" method="post">
                         @csrf
 
                         <input type="hidden" name="borrow_id" value="{{ $borrow_request->id }}">
+                        <input type="hidden" name="amount" value="{{ $borrow_request->fine }}">
 
                         <button type="submit" class="btn btn-success">
                             Pay with Stripe

@@ -94,6 +94,8 @@ class HomeController extends Controller
 
     public function process_payment(Request $request){
         $borrow_request = Borrow::find($request->borrow_id);
+        
+
         $borrow_request->payment_status = 'paid';
         $borrow_request->transaction_id = uniqid();
         $borrow_request->fine = '0';
@@ -101,11 +103,5 @@ class HomeController extends Controller
         return redirect('/book_history');
     }
 
-    public function payment_jazzcash(){
-        
-    }
     
-    public function payment_easypaisa(){
-
-    }
 }

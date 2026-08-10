@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Borrow;
+
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
+
+class PaymentController extends Controller
+{
+    //
+    // public function checkout(Request $request){
+    //     $borrow_request = Borrow::find($request->borrow_id);
+        
+
+    //     $borrow_request->payment_status = 'paid';
+    //     $borrow_request->transaction_id = uniqid();
+    //     $borrow_request->fine = '0';
+    //     $borrow_request->save();
+    //     return redirect('/book_history');
+    // }
+
+    public function checkout(Request $request)
+    {
+        $borrow = Borrow::findOrFail($request->borrow_id);
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd',
+
+                    'product_data' => [
+                        'name' => 'Library Fine',
+                    ],
+
+                    // Stripe expects the smallest currency unit
+                    'unit_amount' => $borrow->fine * 100,
+                ],
+
+                'quantity' => 1,
+            ]],
+
+            'mode' => 'payment',
+
+            'success_url' => route('payment.success') . '?borrow=' . $borrow->id,
+
+            'cancel_url' => route('payment.cancel'),
+        ]);
+
+        return redirect($session->url);
+    }
+
+    public function success(Request $request)
+    {
+        $borrow_request = Borrow::findOrFail($request->borrow);
+
+        $borrow_request->payment_status = 'paid';
+        $borrow_request->transaction_id = uniqid();
+        $borrow_request->fine = '0';
+
+
+        $borrow_request->save();
+
+        return redirect('/book_history')
+            ->with('message', 'Payment completed successfully.');
+    }
+
+    public function cancel()
+    {
+        return redirect('/book_history')->with('message', 'Payment was cancelled.');
+    }
+}

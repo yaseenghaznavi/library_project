@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\Admin;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -52,3 +53,14 @@ Route::get('/payment/{id}', [HomeController::class, 'payment']);
 
 // Route::post('/process_payment/JazzCash', [HomeController::class, 'payment_jazzcash']);
 // Route::post('/process_payment/JazzCash', [HomeController::class, 'payment_easypaisa']);
+
+// Route::post('/process_payment', [PaymentController::class, 'process_payment']);
+
+Route::post('/stripe_checkout', [PaymentController::class, 'checkout'])
+    ->name('stripe.checkout');
+
+Route::get('/payment_success', [PaymentController::class, 'success'])
+    ->name('payment.success');
+
+Route::get('payment_cancel', [PaymentController::class, 'cancel'])
+    ->name('payment.cancel');
