@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Borrow;
 
 use Stripe\Stripe;
+use Stripe\Webhook;
 use Stripe\Checkout\Session;
 
 class PaymentController extends Controller
@@ -74,5 +75,55 @@ class PaymentController extends Controller
     public function cancel()
     {
         return redirect('/book_history')->with('message', 'Payment was cancelled.');
+    }
+
+    public function webhook(Request $request)
+    {
+        $payload = $request->getContent();
+
+        $signature = $request->header('Stripe-Signature');
+
+        $endpointSecret = config('services.stripe.webhook_secret');
+
+        try {
+            $event = Webhook::constructEvent(
+                $payload,
+                $signature,
+                $endpointSecret
+            );
+        } catch (\UnexpectedValueException $e) {
+            return response('Invalid payload', 400);
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            return response('Invalid signature', 400);
+        }
+
+        if ($event->type === 'checkout.session.completed') {
+
+            $session = $event->data->object;
+
+            // Your borrow ID
+            $borrowId = $session->metadata->borrow_id ?? null;
+
+            if (!$borrowId) {
+                return response('Borrow ID missing', 400);
+            }
+
+            $borrow = Borrow::find($borrowId);
+
+            if (!$borrow) {
+                return response('Borrow not found', 404);
+            }
+
+            // Prevent processing the same payment twice
+            if ($borrow->payment_status === 'paid') {
+                return response('Already processed', 200);
+            }
+
+            $borrow->payment_status = 'paid';
+            $borrow->transaction_id = $session->payment_intent;
+            $borrow->save();
+        }
+
+        return response('Webhook received', 200);
     }
 }

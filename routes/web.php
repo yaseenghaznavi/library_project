@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ChatController;
 use App\Http\Middleware\Admin;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -64,3 +65,11 @@ Route::get('/payment_success', [PaymentController::class, 'success'])
 
 Route::get('payment_cancel', [PaymentController::class, 'cancel'])
     ->name('payment.cancel');
+
+Route::post('/stripe_webhook', [PaymentController::class, 'webhook'])
+    ->name('stripe.webhook');
+
+// Chatbot section
+
+Route::post('/chat', [ChatController::class, 'chat'])->name('chat');
+

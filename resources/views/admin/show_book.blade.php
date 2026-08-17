@@ -9,7 +9,7 @@
         .table_center{
             text-align: center;
             margin: auto;
-            border: 1px solid yellowgreen;
+            border: 1px solid white;
             margin-top: 50px;
         }
 
@@ -19,6 +19,10 @@
             font-size: 20px;
             font-weight: bold;
             color: black;
+        }
+
+        td{
+            border: 1px solid white;
         }
 
         .img_author{
@@ -32,6 +36,11 @@
         }
 
     </style>
+
+    {{-- Datable CSS --}}
+    <link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">
+
+
   </head>
   <body>
     <header class="header">   
@@ -56,43 +65,46 @@
             @endif
             
             <div>
-                <table class="table_center">
-                    <tr>
-                        <th>Book Title</th>
-                        <th>Author Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Author Image</th>
-                        <th>Book Image</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-
-                    @foreach ($book_data as $book)
+                <table class="table_center datatable">
+                    <thead>
                         <tr>
-                            <td>{{$book->title}}</td>
-                            <td>{{$book->author_name}}</td>
-                            <td>{{$book->price}}</td>
-                            <td>{{$book->quantity}}</td>
-                            <td>{{$book->description}}</td>
-                            <td>{{$book->category->cat_title}}</td>
-                            <td>
-                                <img class="img_author" src="author/{{$book->author_img}}">
-                            </td>
-                            <td>
-                                <img class="img_book" src="book/{{$book->book_img}}">
-                            </td>
-                            <td>
-                                <a class="btn btn-info" href="{{url('edit_book', $book->id)}}">Update</a>
-                            </td>
-                            <td>
-                                <a onclick="confirmation(event)" href="{{url('book_delete', $book->id)}}" class="btn btn-danger">Delete</a>
-                            </td>
+                            <th>Book Title</th>
+                            <th>Author Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Author Image</th>
+                            <th>Book Image</th>
+                            <th>Update</th>
+                            <th>Delete</th>
                         </tr>
-                    @endforeach
+                    </thead>
 
+                    <tbody>
+                        @foreach ($book_data as $book)
+                            <tr>
+                                <td>{{$book->title}}</td>
+                                <td>{{$book->author_name}}</td>
+                                <td>{{$book->price}}</td>
+                                <td>{{$book->quantity}}</td>
+                                <td>{{$book->description}}</td>
+                                <td>{{$book->category->cat_title}}</td>
+                                <td>
+                                    <img class="img_author" src="author/{{$book->author_img}}">
+                                </td>
+                                <td>
+                                    <img class="img_book" src="book/{{$book->book_img}}">
+                                </td>
+                                <td>
+                                    <a class="btn btn-info" href="{{url('edit_book', $book->id)}}">Update</a>
+                                </td>
+                                <td>
+                                    <a onclick="confirmation(event)" href="{{url('book_delete', $book->id)}}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
 
@@ -121,5 +133,19 @@
             });
         }
       </script>
+
+      <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+
+      {{-- Datatable JS --}}
+      <script src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js" ></script>
+
+      <script type="text/javascript">
+
+        $(document).ready(function(){
+            $('.datatable').DataTable();
+        });
+
+      </script>
+
   </body>
 </html>

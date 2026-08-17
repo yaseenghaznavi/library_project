@@ -181,9 +181,14 @@ class AdminController extends Controller
         else{
             $book_request->status = 'Approved';
 
-            $book_request->borrow_date = Carbon::now()->format('Y-m-d');
 
-            $book_request->due_date = Carbon::now()->addDays(15)->format('Y-m-d');
+            // $book_request->borrow_date = Carbon::now()->format('Y-m-d');
+
+            // $book_request->due_date = Carbon::now()->addDays(15)->format('Y-m-d');
+            
+            $book_request->borrow_date = '2026-08-04';
+
+            $book_request->due_date = '2026-08-04';
             
             $book_request->save();
             

@@ -60,6 +60,20 @@ return [
             'report' => false,
         ],
 
+        'book_public' => [
+            'driver' => 'local',
+            'root' => public_path('book'),
+            'url' => env('APP_URL') . '/book',
+            'visibility' => 'public',
+        ],
+
+        'author_public' => [
+            'driver' => 'local',
+            'root' => public_path('author'),
+            'url' => env('APP_URL') . '/author',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

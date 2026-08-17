@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @include('home.css')
 
@@ -19,7 +20,7 @@
 
     @include('home.footer')
 
-
+    @include('home.chatbot')
 
 
 
